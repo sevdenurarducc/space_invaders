@@ -1,6 +1,6 @@
 
 // =====================================================================
-// space_invaders_top.v — ana dosya, tüm modülleri bağlar
+// space_invaders.v — ana dosya, tüm modülleri bağlar
 // Sahip : Sevde – Tur 1, 6, 9
 // 8bitworkshop üst modül olarak "top" adını kullanır.
 // =====================================================================

@@ -1,13 +1,13 @@
 space_invaders
 =====
 
-[Open this project in 8bitworkshop](https://8bitworkshop.com/latest/?platform=verilog&githubURL=https%3A%2F%2Fgithub.com%2Fsevdenurarducc%2Fspace_invaders&file=space_invaders_top.v).
+[Open this project in 8bitworkshop](https://8bitworkshop.com/latest/?platform=verilog&githubURL=https%3A%2F%2Fgithub.com%2Fsevdenurarducc%2Fspace_invaders&file=space_invaders.v).
 
 ## Dosya yapısı
 
 | Dosya | Görev | Sahip |
 |---|---|---|
-| `space_invaders_top.v` | Ana dosya, tüm modülleri bağlar | Sevde – Tur 1, 6, 9 |
+| `space_invaders.v` | Ana dosya, tüm modülleri bağlar | Sevde – Tur 1, 6, 9 |
 | `hvsync_generator.v` | Hazır görüntü senkron modülü | 8bitworkshop örneği |
 | `frame_tick.v` | Karede bir kez 1 olan darbe | Sevde – Tur 1 |
 | `game_fsm.v` | Ana oyun FSM'si | Sevde – Tur 1, 6 |
@@ -25,7 +25,7 @@ space_invaders
 | `score.v` | BCD skor sayacı | Alperen – Tur 8 |
 | `test_*.v` | Herkesin kendi test dosyaları (ör. `test_player_top.v`) | Herkes |
 
-Her `.v` dosyası `` `ifndef `` koruması içerir, böylece hem `space_invaders_top.v`
+Her `.v` dosyası `` `ifndef `` koruması içerir, böylece hem `space_invaders.v`
 hem de `test_*.v` dosyaları aynı modülü güvenle `` `include `` edebilir.
 
 ## Oyun kuralları
