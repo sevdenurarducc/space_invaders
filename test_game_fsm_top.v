@@ -1,23 +1,18 @@
-
-// =====================================================================
-// test_game_fsm_top.v — game_fsm testi
-// Sahip : Sevde – Tur 1
-//
-// Her durum farklı bir arka plan rengiyle gösterilir:
-//   TITLE = mavi, PLAY = yeşil, PLAYER_HIT = kırmızı,
-//   LEVEL_CLEAR = sarı, GAME_OVER = mor
-// Sol üstteki küçük beyaz kare saniyede bir yanıp söner (frame_tick testi).
-//
-// Tuşlar (8bitworkshop switches_p1):
-//   Space  (bit 4) = start
-//   Shift  (bit 5) = player_hit
-//   Yukarı (bit 2) = aliens_cleared
-//   Aşağı  (bit 3) = aliens_landed
-//   Sol    (bit 0) = lives_zero (PLAYER_HIT'te basılı tutulursa GAME_OVER)
-//
-// Çalıştırmak için bu dosyayı ana dosya olarak açın:
-//   ...&file=test_game_fsm_top.v
-// =====================================================================
+/*
+  test_game_fsm_top.v — sahibi: Sevde — Tur 1
+  Ne yapar : game_fsm ve frame_tick testi.
+             Her durum farklı bir arka plan rengiyle gösterilir:
+               TITLE = mavi, PLAY = yeşil, PLAYER_HIT = kırmızı,
+               LEVEL_CLEAR = sarı, GAME_OVER = mor (beyaz = hatalı durum)
+             Sol üstteki küçük beyaz kare saniyede bir yanıp söner (frame_tick testi).
+  Tuşlar   : (8bitworkshop switches_p1)
+               Space  (bit 4) = start_btn
+               Shift  (bit 5) = player_hit
+               Yukarı (bit 2) = aliens_left = 0 (tüm uzaylılar vuruldu)
+               Aşağı  (bit 3) = aliens_landed
+               Sol    (bit 0) = lives = 0 (PLAYER_HIT'te basılı tutulursa GAME_OVER)
+  Notlar   : Çalıştırmak için bu dosyayı ana dosya olarak açın (...&file=test_game_fsm_top.v).
+*/
 
 `include "hvsync_generator.v"
 `include "frame_tick.v"
@@ -41,34 +36,34 @@ module top(clk, reset, hsync, vsync, rgb, switches_p1);
     .hpos(hpos), .vpos(vpos)
   );
 
-  wire tick;
+  wire frame_tick;
   frame_tick ft(
     .clk(clk), .reset(reset),
     .hpos(hpos), .vpos(vpos),
-    .tick(tick)
+    .tick(frame_tick)
   );
 
   wire [2:0] state;
-  wire playing, new_game, next_level;
+  wire new_game, playing, next_level;
   game_fsm fsm(
-    .clk(clk), .reset(reset), .tick(tick),
-    .start(switches_p1[4]),
+    .clk(clk), .reset(reset), .frame_tick(frame_tick),
+    .start_btn(switches_p1[4]),
     .player_hit(switches_p1[5]),
-    .aliens_cleared(switches_p1[2]),
     .aliens_landed(switches_p1[3]),
-    .lives_zero(switches_p1[0]),
+    .aliens_left(switches_p1[2] ? 6'd0 : 6'd32),
+    .lives(switches_p1[0] ? 2'd0 : 2'd3),
     .state(state),
-    .playing(playing), .new_game(new_game), .next_level(next_level)
+    .new_game(new_game), .playing(playing), .next_level(next_level)
   );
 
-  // tick sayacı: 60 karede bir kare yanıp söner (frame_tick testi)
+  // frame_tick sayacı: 60 karede bir kare yanıp söner
   reg [5:0] frames;
   reg blink;
   always @(posedge clk) begin
     if (reset) begin
       frames <= 6'd0;
       blink  <= 1'b0;
-    end else if (tick) begin
+    end else if (frame_tick) begin
       if (frames == 6'd59) begin
         frames <= 6'd0;
         blink  <= ~blink;

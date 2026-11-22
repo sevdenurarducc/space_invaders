@@ -1,24 +1,17 @@
-
 `ifndef SCORE_H
 `define SCORE_H
-
-// =====================================================================
-// score.v
-// Görev : BCD skor sayacı
-// Sahip : Alperen – Tur 8
-// =====================================================================
-
+/*
+  score.v — sahibi: Alperen — Tur 8
+  Ne yapar : 4 haneli BCD skor sayacı. kill gelince vurulan satıra göre
+             10/20/30 ekler (onlar basamağına 1/2/3). Yeni oyunda sıfırlanır.
+  Girişler : clk, reset, new_game, kill, alien_row
+  Çıkışlar : score_bcd
+*/
 module score(
-  input  clk,
-  input  reset,
-  input  new_game,        // game_fsm: yeni oyun başlarken 1 çevrim 1
-  input  add,             // collision: bullet_hit_alien
-  output [11:0] bcd       // 3 hane BCD
+  input  wire        clk, reset, new_game, kill,
+  input  wire [1:0]  alien_row,
+  output wire [15:0] score_bcd
 );
-
-  // TODO (Tur 8)
-  assign bcd = 12'd0;
-
+  assign score_bcd = 16'h0000; // TODO (Tur 8): Alperen dolduracak
 endmodule
-
 `endif

@@ -1,26 +1,15 @@
-
 `ifndef LIVES_H
 `define LIVES_H
-
-// =====================================================================
-// lives.v
-// Görev : Can sayacı
-// Sahip : Sevde – Tur 6
-// =====================================================================
-
+/*
+  lives.v — sahibi: Sevde — Tur 6
+  Ne yapar : Can sayacı. Yeni oyunda 3, player_hit'te 1 azalır.
+  Girişler : clk, reset, new_game, player_hit
+  Çıkışlar : lives
+*/
 module lives(
-  input  clk,
-  input  reset,
-  input  new_game,        // game_fsm: yeni oyun başlarken 1 çevrim 1
-  input  player_hit,
-  output [1:0] lives,
-  output lives_zero
+  input  wire       clk, reset, new_game, player_hit,
+  output wire [1:0] lives
 );
-
-  // TODO (Tur 6)
-  assign lives      = 2'd3;
-  assign lives_zero = 1'b0;
-
+  assign lives = 2'd3;        // TODO (Tur 6): Sevde dolduracak
 endmodule
-
 `endif

@@ -1,31 +1,26 @@
-
 `ifndef BULLET_H
 `define BULLET_H
-
-// =====================================================================
-// bullet.v
-// Görev : Oyuncu mermisi FSM'si ve çizimi
-// Sahip : Mine – Tur 5
-// =====================================================================
-
+/*
+  bullet.v — sahibi: Mine — Tur 5
+  Ne yapar : Oyuncu mermisi FSM'si (READY -> FLYING -> READY) ve çizimi.
+  Girişler : clk, reset, frame_tick, playing, fire_pulse, hit (pb_hit),
+             player_x, hpos, vpos
+  Çıkışlar : active (pb_active), x, y (pb_x, pb_y), bullet_on
+  Notlar   : Aynı anda tek mermi. Ekranın üstüne gelince veya hit=1 olunca READY.
+*/
 module bullet(
-  input  clk,
-  input  reset,
-  input  tick,
-  input  playing,         // game_fsm: PLAY durumunda 1, değilse hareket durur
-  input  fire,            // edge_detect çıkışı
-  input  hit,             // collision: bullet_hit_alien
-  input  [7:0] player_x,
-  input  [8:0] hpos,
-  input  [8:0] vpos,
-  output active,          // mermi ekranda iken 1
-  output bullet_gfx
+  input  wire       clk, reset, frame_tick,
+  input  wire       playing,          // game_fsm: PLAY durumunda 1
+  input  wire       fire_pulse, hit,
+  input  wire [7:0] player_x,
+  input  wire [8:0] hpos, vpos,
+  output wire       active,
+  output wire [7:0] x, y,
+  output wire       bullet_on
 );
-
-  // TODO (Tur 5)
-  assign active     = 1'b0;
-  assign bullet_gfx = 1'b0;
-
+  assign active    = 1'b0;    // TODO (Tur 5): Mine dolduracak
+  assign x         = 8'd0;
+  assign y         = 8'd0;
+  assign bullet_on = 1'b0;
 endmodule
-
 `endif

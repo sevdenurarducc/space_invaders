@@ -1,23 +1,16 @@
-
 `ifndef DEBOUNCE_H
 `define DEBOUNCE_H
-
-// =====================================================================
-// debounce.v
-// Görev : Tuş titreşimini temizler
-// Sahip : Mine – Tur 2
-// =====================================================================
-
+/*
+  debounce.v — sahibi: Mine — Tur 2
+  Ne yapar : Sayaçlı basit titreşim temizleyici.
+  Girişler : clk, in
+  Çıkışlar : out
+  Notlar   : Simülatörde gerekmeyebilir, ama sunumda anlatılacak.
+*/
 module debounce(
-  input  clk,
-  input  reset,
-  input  btn_in,
-  output btn_out
+  input  wire clk, in,
+  output wire out
 );
-
-  // TODO (Tur 2)
-  assign btn_out = btn_in;
-
+  assign out = in;            // TODO (Tur 2): Mine dolduracak
 endmodule
-
 `endif

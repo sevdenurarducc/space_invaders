@@ -1,9 +1,9 @@
-
-// =====================================================================
-// space_invaders.v — ana dosya, tüm modülleri bağlar
-// Sahip : Sevde – Tur 1, 6, 9
-// 8bitworkshop üst modül olarak "top" adını kullanır.
-// =====================================================================
+/*
+  space_invaders.v — sahibi: Sevde — Tur 1, 6, 9
+  Ne yapar : Ana dosya, tüm modülleri bağlar. (Planda adı space_invaders_top.v.)
+  Notlar   : 8bitworkshop üst modül olarak "top" adını kullanır.
+             frame_tick ve game_fsm hazır (Tur 1); tek başına testi: test_game_fsm_top.v
+*/
 
 `include "hvsync_generator.v"
 `include "frame_tick.v"
@@ -40,11 +40,10 @@ module top(clk, reset, hsync, vsync, rgb);
     .vpos(vpos)
   );
 
-  // frame_tick ve game_fsm hazır (Tur 1); tek başına testi: test_game_fsm_top.v
-  // TODO (Tur 6, 9): diğer modülleri sırayla bağla.
+  // TODO (Tur 2-9): modüller sırası gelince buraya bağlanacak.
 
   // Zemin çizgisi: uzaylılar bu satıra inerse oyun biter (aliens_landed).
-  // GEÇİCİ — renderer bağlanınca oraya taşınacak.
+  // GEÇİCİ — Tur 4'te renderer'a taşınacak.
   localparam [8:0] GROUND_Y = 9'd230;
   wire ground_gfx = display_on && (vpos == GROUND_Y || vpos == GROUND_Y + 9'd1);
 

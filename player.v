@@ -1,30 +1,21 @@
-
 `ifndef PLAYER_H
 `define PLAYER_H
-
-// =====================================================================
-// player.v
-// Görev : Gemi hareketi ve gemi çizimi
-// Sahip : Mine – Tur 2
-// =====================================================================
-
+/*
+  player.v — sahibi: Mine — Tur 2
+  Ne yapar : Gemiyi sola/sağa hareket ettirir, gemi pikselini üretir.
+  Girişler : clk, reset, frame_tick, playing, btn_left, btn_right, hpos, vpos
+  Çıkışlar : player_x (geminin sol kenarı), ship_on
+  Notlar   : Sadece frame_tick=1 ve playing=1 iken hareket eder. Sınırlar 8..232.
+*/
 module player(
-  input  clk,
-  input  reset,
-  input  tick,
-  input  playing,         // game_fsm: PLAY durumunda 1, değilse hareket durur
-  input  left,
-  input  right,
-  input  [8:0] hpos,
-  input  [8:0] vpos,
-  output [7:0] player_x,
-  output player_gfx
+  input  wire       clk, reset, frame_tick,
+  input  wire       playing,          // game_fsm: PLAY durumunda 1
+  input  wire       btn_left, btn_right,
+  input  wire [8:0] hpos, vpos,
+  output wire [7:0] player_x,
+  output wire       ship_on
 );
-
-  // TODO (Tur 2)
-  assign player_x   = 8'd120;
-  assign player_gfx = 1'b0;
-
+  assign player_x = 8'd120;   // TODO (Tur 2): Mine dolduracak
+  assign ship_on  = 1'b0;
 endmodule
-
 `endif

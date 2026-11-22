@@ -1,31 +1,32 @@
-
 `ifndef GAME_FSM_H
 `define GAME_FSM_H
+/*
+  game_fsm.v — sahibi: Sevde — Tur 1, 6
+  Ne yapar : Ana oyun durum makinesi (Moore).
+  Girişler : clk, reset, frame_tick, start_btn, player_hit, aliens_landed,
+             aliens_left, lives
+  Çıkışlar : state, new_game, playing, next_level
 
-// =====================================================================
-// game_fsm.v
-// Görev : Ana oyun durum makinesi.
-// Sahip : Sevde – Tur 1, 6
-//
-// Durumlar:
-//   TITLE       : başlık ekranı, start beklenir
-//   PLAY        : oyun oynanıyor
-//   PLAYER_HIT  : gemi vuruldu, WAIT_FRAMES kare beklenir
-//   LEVEL_CLEAR : tüm uzaylılar vuruldu, WAIT_FRAMES kare beklenir
-//   GAME_OVER   : oyun bitti, WAIT_FRAMES kare beklenip TITLE'a dönülür
-//
-// Geçişler:
-//   TITLE       --start-------------------> PLAY        (new_game darbesi)
-//   PLAY        --aliens_landed-----------> GAME_OVER
-//   PLAY        --player_hit--------------> PLAYER_HIT
-//   PLAY        --aliens_cleared----------> LEVEL_CLEAR
-//   PLAYER_HIT  --bekleme bitti, can var--> PLAY
-//   PLAYER_HIT  --bekleme bitti, can yok--> GAME_OVER
-//   LEVEL_CLEAR --bekleme bitti-----------> PLAY        (next_level darbesi)
-//   GAME_OVER   --bekleme bitti-----------> TITLE
-//
-// Yapı: iki always bloğu (1: durum + sayaç register'ı, 2: sonraki durum).
-// =====================================================================
+  Durumlar:
+    TITLE       : başlık ekranı, start_btn beklenir
+    PLAY        : oyun oynanıyor
+    PLAYER_HIT  : gemi vuruldu, WAIT_FRAMES kare beklenir
+    LEVEL_CLEAR : tüm uzaylılar vuruldu, WAIT_FRAMES kare beklenir
+    GAME_OVER   : oyun bitti, WAIT_FRAMES kare beklenip TITLE'a dönülür
+
+  Geçişler:
+    TITLE       --start_btn---------------> PLAY        (new_game darbesi)
+    PLAY        --aliens_landed-----------> GAME_OVER
+    PLAY        --player_hit--------------> PLAYER_HIT
+    PLAY        --aliens_left == 0--------> LEVEL_CLEAR
+    PLAYER_HIT  --bekleme bitti, lives > 0-> PLAY
+    PLAYER_HIT  --bekleme bitti, lives == 0> GAME_OVER
+    LEVEL_CLEAR --bekleme bitti-----------> PLAY        (next_level darbesi)
+    GAME_OVER   --bekleme bitti-----------> TITLE
+
+  Notlar   : İki always bloğu (1: durum + sayaç register'ı, 2: sonraki durum).
+             playing, next_level ve aliens_landed planın Ek A'sına eklendi.
+*/
 
 // Durum kodları: diğer dosyalar `GS_PLAY gibi kullanabilir
 `define GS_TITLE       3'd0
@@ -35,18 +36,16 @@
 `define GS_GAME_OVER   3'd4
 
 module game_fsm(
-  input  clk,
-  input  reset,
-  input  tick,             // frame_tick
-  input  start,            // başlatma tuşu
-  input  player_hit,       // collision: uzaylı mermisi gemiye çarptı
-  input  aliens_cleared,   // alien_formation: tüm uzaylılar vuruldu
-  input  aliens_landed,    // alien_formation: uzaylılar zemine indi
-  input  lives_zero,       // lives: can kalmadı
-  output reg [2:0] state,  // `GS_* kodları
-  output playing,          // state == PLAY (hareketleri durdurmak için)
-  output new_game,         // TITLE -> PLAY geçişinde 1 çevrim: skor/can/uzaylı sıfırla
-  output next_level        // LEVEL_CLEAR -> PLAY geçişinde 1 çevrim: uzaylıları yenile
+  input  wire       clk, reset, frame_tick,
+  input  wire       start_btn,       // başlatma (ateş) tuşu
+  input  wire       player_hit,      // collision: uzaylı mermisi gemiye çarptı
+  input  wire       aliens_landed,   // collision: uzaylılar zemine indi
+  input  wire [5:0] aliens_left,     // alien_formation: kalan uzaylı sayısı
+  input  wire [1:0] lives,           // lives: kalan can
+  output reg  [2:0] state,           // `GS_* kodları
+  output wire       new_game,        // TITLE -> PLAY geçişinde 1 çevrim: skor/can/uzaylı sıfırla
+  output wire       playing,         // state == PLAY (hareketleri durdurmak için)
+  output wire       next_level       // LEVEL_CLEAR -> PLAY geçişinde 1 çevrim: uzaylıları yenile
 );
 
   parameter [7:0] WAIT_FRAMES = 8'd120;   // 120 kare ≈ 2 saniye (60 Hz), en fazla 255
@@ -55,7 +54,9 @@ module game_fsm(
   reg [2:0] next_state;
   reg [7:0] wait_cnt;
 
-  wire wait_done = tick && (wait_cnt == WAIT_LAST);
+  wire aliens_cleared = (aliens_left == 6'd0);
+  wire lives_zero     = (lives == 2'd0);
+  wire wait_done      = frame_tick && (wait_cnt == WAIT_LAST);
 
   // ---- 1. always: durum register'ı ve bekleme sayacı ----
   always @(posedge clk) begin
@@ -66,7 +67,7 @@ module game_fsm(
       state <= next_state;
       if (next_state != state)
         wait_cnt <= 8'd0;                    // yeni durumda sayaç sıfırdan başlar
-      else if (tick && wait_cnt != WAIT_LAST)
+      else if (frame_tick && wait_cnt != WAIT_LAST)
         wait_cnt <= wait_cnt + 8'd1;         // her karede bir artar, sonda durur
     end
   end
@@ -76,7 +77,7 @@ module game_fsm(
     next_state = state;
     case (state)
       `GS_TITLE:
-        if (start) next_state = `GS_PLAY;
+        if (start_btn) next_state = `GS_PLAY;
       `GS_PLAY:
         if (aliens_landed)       next_state = `GS_GAME_OVER;
         else if (player_hit)     next_state = `GS_PLAYER_HIT;
@@ -97,5 +98,4 @@ module game_fsm(
   assign next_level = (state == `GS_LEVEL_CLEAR) && (next_state == `GS_PLAY);
 
 endmodule
-
 `endif

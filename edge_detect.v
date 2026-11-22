@@ -1,23 +1,15 @@
-
 `ifndef EDGE_DETECT_H
 `define EDGE_DETECT_H
-
-// =====================================================================
-// edge_detect.v
-// Görev : Yükselen kenarda tek çevrimlik darbe (ateş tuşu)
-// Sahip : Mine – Tur 2
-// =====================================================================
-
+/*
+  edge_detect.v — sahibi: Mine — Tur 2
+  Ne yapar : Tuşa basıldığı anda tek saat çevrimlik darbe üretir (fire_pulse).
+  Girişler : clk, in
+  Çıkışlar : pulse
+*/
 module edge_detect(
-  input  clk,
-  input  reset,
-  input  in,
-  output pulse
+  input  wire clk, in,
+  output wire pulse
 );
-
-  // TODO (Tur 2)
-  assign pulse = 1'b0;
-
+  assign pulse = 1'b0;        // TODO (Tur 2): Mine dolduracak
 endmodule
-
 `endif
