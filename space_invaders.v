@@ -40,13 +40,14 @@ module top(clk, reset, hsync, vsync, rgb);
     .vpos(vpos)
   );
 
-  // TODO (Tur 1): frame_tick ve game_fsm örneklerini buraya ekle.
+  // frame_tick ve game_fsm hazır (Tur 1); tek başına testi: test_game_fsm_top.v
   // TODO (Tur 6, 9): diğer modülleri sırayla bağla.
 
-  // Geçici test deseni — renderer bağlanınca kaldırılacak
-  wire r = display_on && hpos[4];
-  wire g = display_on && vpos[4];
-  wire b = display_on && hpos[0];
-  assign rgb = {b,g,r};
+  // Zemin çizgisi: uzaylılar bu satıra inerse oyun biter (aliens_landed).
+  // GEÇİCİ — renderer bağlanınca oraya taşınacak.
+  localparam [8:0] GROUND_Y = 9'd230;
+  wire ground_gfx = display_on && (vpos == GROUND_Y || vpos == GROUND_Y + 9'd1);
+
+  assign rgb = ground_gfx ? 3'b010 : 3'b000;   // {b,g,r}: yeşil zemin, siyah arka plan
 
 endmodule
