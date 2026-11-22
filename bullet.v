@@ -6,8 +6,6 @@
 // bullet.v
 // Görev : Oyuncu mermisi FSM'si ve çizimi
 // Sahip : Mine – Tur 5
-// Not   : Port listesi TASLAKTIR — modül sahibi ihtiyaca göre değiştirebilir.
-//         Değişiklik olursa README.md'deki sinyal tablosunu güncelleyin.
 // =====================================================================
 
 module bullet(

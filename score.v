@@ -6,8 +6,6 @@
 // score.v
 // Görev : BCD skor sayacı
 // Sahip : Alperen – Tur 8
-// Not   : Port listesi TASLAKTIR — modül sahibi ihtiyaca göre değiştirebilir.
-//         Değişiklik olursa README.md'deki sinyal tablosunu güncelleyin.
 // =====================================================================
 
 module score(

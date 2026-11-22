@@ -6,8 +6,6 @@
 // sprite_rom.v
 // Görev : Uzaylı ve rakam desenleri
 // Sahip : Alperen – Tur 4, 8
-// Not   : Port listesi TASLAKTIR — modül sahibi ihtiyaca göre değiştirebilir.
-//         Değişiklik olursa README.md'deki sinyal tablosunu güncelleyin.
 // =====================================================================
 
 module sprite_rom(

@@ -6,8 +6,6 @@
 // lfsr.v
 // Görev : Rastgele sayı üreteci
 // Sahip : Şefikullah – Tur 7
-// Not   : Port listesi TASLAKTIR — modül sahibi ihtiyaca göre değiştirebilir.
-//         Değişiklik olursa README.md'deki sinyal tablosunu güncelleyin.
 // =====================================================================
 
 module lfsr(

@@ -6,8 +6,6 @@
 // alien_formation.v
 // Görev : Uzaylı dizisi ve hareket FSM'si
 // Sahip : Şefikullah – Tur 3, 7
-// Not   : Port listesi TASLAKTIR — modül sahibi ihtiyaca göre değiştirebilir.
-//         Değişiklik olursa README.md'deki sinyal tablosunu güncelleyin.
 // =====================================================================
 
 module alien_formation(

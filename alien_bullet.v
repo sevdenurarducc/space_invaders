@@ -6,8 +6,6 @@
 // alien_bullet.v
 // Görev : Uzaylı mermileri
 // Sahip : Şefikullah – Tur 7
-// Not   : Port listesi TASLAKTIR — modül sahibi ihtiyaca göre değiştirebilir.
-//         Değişiklik olursa README.md'deki sinyal tablosunu güncelleyin.
 // =====================================================================
 
 module alien_bullet(

@@ -6,8 +6,6 @@
 // lives.v
 // Görev : Can sayacı
 // Sahip : Sevde – Tur 6
-// Not   : Port listesi TASLAKTIR — modül sahibi ihtiyaca göre değiştirebilir.
-//         Değişiklik olursa README.md'deki sinyal tablosunu güncelleyin.
 // =====================================================================
 
 module lives(

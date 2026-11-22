@@ -6,8 +6,6 @@
 // player.v
 // Görev : Gemi hareketi ve gemi çizimi
 // Sahip : Mine – Tur 2
-// Not   : Port listesi TASLAKTIR — modül sahibi ihtiyaca göre değiştirebilir.
-//         Değişiklik olursa README.md'deki sinyal tablosunu güncelleyin.
 // =====================================================================
 
 module player(

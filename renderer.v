@@ -6,8 +6,6 @@
 // renderer.v
 // Görev : Katmanları birleştirip renk üretir
 // Sahip : Alperen – Tur 4, 8
-// Not   : Port listesi TASLAKTIR — modül sahibi ihtiyaca göre değiştirebilir.
-//         Değişiklik olursa README.md'deki sinyal tablosunu güncelleyin.
 // =====================================================================
 
 module renderer(
