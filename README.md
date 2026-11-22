@@ -73,27 +73,25 @@ Her turun ayrıntılı görev listesi (zorunlu / vakit kalırsa) çalışma plan
 **Tur başında (sırası gelen kişi)**
 1. 8bitworkshop'ta **Sync → Pull Latest from Repository** ile son hali alın
    (ilk turunuzsa önce **Sync → Import Project from GitHub...**).
-2. Bu README'nin en altındaki bir önceki **devir notunu** okuyun.
-3. `space_invaders.v`'yi açın; oyunun bir önceki turun sonundaki gibi çalıştığını görün.
-4. Kendi turunuzun görevlerini okuyun ve **zorunlu** olanlardan başlayın.
+2. `space_invaders.v`'yi açın; oyunun bir önceki turun sonundaki gibi çalıştığını görün.
+3. Kendi turunuzun görevlerini okuyun ve **zorunlu** olanlardan başlayın.
 
 **Tur sırasında**
 - Projeyi sadece sırası gelen kişi değiştirir. Diğerleri dosyalara dokunmaz (okumak serbest).
 - Her çalışma oturumu sonunda **push** edin.
 - Takıldığınız yer olursa gruba yazın; önce Sevde, sonra bir önceki turun sahibi yardım eder.
 - Kendi modülünüzü denemek için `test_` ile başlayan bir test dosyası açabilirsiniz (ör. `test_player_top.v`).
-- Gerekirse `space_invaders.v` içine kendi modülünüzü bağlayın; değişikliği devir notuna yazın.
+- Gerekirse `space_invaders.v` içine kendi modülünüzü bağlayabilirsiniz.
 
 **Tur sonunda**
 - [ ] Proje **hatasız derleniyor**.
 - [ ] Turun hedefi ekranda görünüyor; ekran görüntüsü alındı.
 - [ ] Kendi dosyalarınızın en üstünde açıklama başlığı var (aşağıdaki örnek).
-- [ ] README'ye devir notu eklendi (aşağıdaki şablon).
 - [ ] Push edildi ve **Download → All Changes as Zip** ile yedek alındı.
 - [ ] Sıradaki kişi ve Sevde ile **20–30 dakikalık devir görüşmesi** yapıldı.
 
-**Gecikme kuralı:** Tur süresi bittiğinde zorunlu kısım tamamsa sıra devredilir; yarım kalan
-ek iş devir notuna yazılır. Zorunlu kısım bitmediyse hemen Sevde'ye haber verin.
+**Gecikme kuralı:** Tur süresi bittiğinde zorunlu kısım tamamsa sıra devredilir.
+Zorunlu kısım bitmediyse hemen Sevde'ye haber verin.
 **Takvim kaymaz**; gerekirse ek özellikler (uzaylı mermileri, seviye geçişi) kapsamdan çıkarılır.
 
 ## 8bitworkshop ve GitHub
@@ -135,7 +133,7 @@ github.com'da **Add file → Upload files** ile yükleyin.
 | `renderer.v` | Katmanları birleştirip renk üretir | Alperen | 4, 8 |
 | `score.v` | BCD skor sayacı | Alperen | 8 |
 | `test_*.v` | Kişisel test dosyaları (ör. `test_game_fsm_top.v`) | Herkes | — |
-| `README.md` | Proje açıklaması + devir notları | Herkes | her tur |
+| `README.md` | Proje açıklaması | Herkes | her tur |
 
 Bir test dosyasını çalıştırmak için 8bitworkshop'ta onu ana dosya olarak açın
 (bağlantıdaki `file=` kısmını test dosyasının adıyla değiştirin).
@@ -164,7 +162,7 @@ endmodule
 ## Sinyal tablosu
 
 **Bundan sonra herkes bu isimleri kullanır.** Port listeleri iskelet dosyalarda hazır.
-Tur sahibi bir portu gerektiğinde değiştirebilir, ama değişikliği bu tabloya ve devir notuna yazmalıdır.
+Tur sahibi bir portu gerektiğinde değiştirebilir, ama değişikliği bu tabloya yazmalıdır.
 
 | Sinyal | Bit | Üreten → kullanan | Açıklama |
 |---|---|---|---|
@@ -214,60 +212,3 @@ Durum kodları `game_fsm.v` içinde `` `GS_TITLE `` 0, `` `GS_PLAY `` 1, `` `GS_
 | 9 | Canlar bitince GAME OVER; son skor görünüyor; ateş tuşu yeni oyun başlatıyor | ☐ |
 | 10 | Yeni oyunda skor, can ve formasyon sıfırlanıyor | ☐ |
 | 11 | 5 dakika kesintisiz oynanınca görsel bozulma veya donma yok | ☐ |
-
-## Devir notları
-
-Her tur sonunda aşağıdaki şablonu bu bölümün **en altına** kopyalayıp doldurun. En yeni not en altta durur.
-
-```markdown
-## Tur N – İsim – tarih
-
-### Bitenler
-### Yarım kalanlar
-### Değiştirdiğim dosyalar
-### Tuşlar / önemli bilgiler
-### Sıradaki kişinin dikkat etmesi gerekenler
-### Test nasıl yapılır
-```
-
-**Devir görüşmesi (20–30 dk):** sırası biten kişi ekranını paylaşıp oyunu çalıştırır, yazdığı
-dosyaları kısaca anlatır (görevi, girişleri/çıkışları, FSM durumları); sıradaki kişi en az iki
-soru sorar; Sevde derlendiğini ve turun hedefinin tuttuğunu onaylar.
-
----
-
-## Tur 1 – Sevde – 24-27 Kasım
-
-### Bitenler
-- README: oyun kuralları, zorunlu / vakit kalırsa listesi, sinyal tablosu, takvim ve kurallar.
-- İskelet dosyalar: tüm modüller planın Ek A port listeleriyle; proje derleniyor.
-- `frame_tick.v`: `vpos == 240 && hpos == 0` olduğunda 1 çevrimlik darbe (register çıkışlı).
-- `game_fsm.v`: TITLE, PLAY, PLAYER_HIT, LEVEL_CLEAR, GAME_OVER; iki always bloklu yapı;
-  120 karelik bekleme sayacı. LEVEL_CLEAR `aliens_left == 0`, GAME_OVER `lives == 0` veya `aliens_landed` ile.
-- `test_game_fsm_top.v`: her durum ayrı arka plan rengi (TITLE mavi, PLAY yeşil, PLAYER_HIT kırmızı,
-  LEVEL_CLEAR sarı, GAME_OVER mor). Sol üstte saniyede bir yanıp sönen kare `frame_tick`'i gösterir.
-- `space_invaders.v`: 230. satırda geçici yeşil zemin çizgisi.
-
-### Yarım kalanlar
-- Tur 1 ekran görüntüleri: _eklenecek_
-- game_fsm durum diyagramı (vakit kalırsa): _eklenecek_
-
-### Değiştirdiğim dosyalar
-- Hepsi (yeni). Ana dosyanın adı planda `space_invaders_top.v`, projede `space_invaders.v`.
-
-### Tuşlar / önemli bilgiler
-- `test_game_fsm_top.v` (8bitworkshop `switches_p1`): Space = start_btn, Shift = player_hit,
-  Yukarı = aliens_left 0, Aşağı = aliens_landed, Sol = lives 0.
-- `switches_p1` bitleri (test dosyasında kullanılan): bit0 Sol, bit1 Sağ, bit2 Yukarı, bit3 Aşağı,
-  bit4 Space, bit5 Shift. Mine Tur 2'de doğrulayıp kesinleştirecek.
-- Ekran 256×240, `rgb` = `{b,g,r}` (bit 0 kırmızı, bit 1 yeşil, bit 2 mavi).
-
-### Sıradaki kişinin dikkat etmesi gerekenler
-- Mine (Tur 2): `space_invaders.v`'ye `switches_p1` girişini ekleyip tuş bitlerini README'ye tablo olarak yazın.
-  `player` sadece `frame_tick=1` iken hareket etsin; `playing` girişi Tur 6'da bağlanana kadar 1'e bağlanabilir.
-- `game_fsm` henüz `space_invaders.v` içinde bağlı değil, Tur 6'da bağlanacak.
-- Zemin çizgisi şimdilik `space_invaders.v` içinde; Tur 4'te Alperen renderer'a taşıyacak.
-
-### Test nasıl yapılır
-- `space_invaders.v`'yi aç: siyah ekran, altta yeşil zemin çizgisi.
-- `test_game_fsm_top.v`'yi ana dosya olarak aç, yukarıdaki tuşlarla durumlar arasında geç.
