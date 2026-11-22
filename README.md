@@ -98,6 +98,7 @@ Bir test dosyasını çalıştırmak için 8bitworkshop'ta onu ana dosya olarak 
 | `player_x` | 8 | player | bullet | geminin sol kenarı |
 | `player_gfx` | 1 | player | collision, renderer | o pikselde gemi var |
 | `bullet_gfx` | 1 | bullet | collision, renderer | o pikselde oyuncu mermisi var |
+| `active` | 1 | bullet | — | oyuncu mermisi ekranda iken 1 (tek mermi kuralı) |
 | `alien_gfx` | 1 | alien_formation | collision, renderer | o pikselde uzaylı var |
 | `alien_bullet_gfx` | 1 | alien_bullet | collision, renderer | o pikselde uzaylı mermisi var |
 | `score_gfx` | 1 | score / sprite_rom | renderer | o pikselde skor rakamı var |
@@ -141,7 +142,14 @@ Bir test dosyasını çalıştırmak için 8bitworkshop'ta onu ana dosya olarak 
 - `space_invaders.v`: 230. satırda geçici yeşil zemin çizgisi.
 
 **Sonraki turlar için**
-- Mine (Tur 2): `player` ve `bullet` hareketini `tick` ile güncelleyin, `playing` 0 iken durdurun.
+- Mine (Tur 2): `player` hareketini `tick` ile güncelleyin, `playing` 0 iken durdurun.
+  Aynı kural Tur 5'teki `bullet` için de geçerli.
 - Şefikullah (Tur 3): uzaylıların inip inmediğini `GROUND_Y = 230` ile kontrol edin.
 - `game_fsm` henüz `space_invaders.v` içinde bağlı değil, Tur 6'da bağlanacak.
 - Tur 1 ekran görüntüleri: _eklenecek_
+
+**Grupla karar verilecek**
+- Skor 10/20/30: `score` şu an sadece `add` alıyor. Vurulan uzaylının satırı
+  (veya puanı) `collision` / `alien_formation`'dan `score`'a nasıl gelecek?
+- `renderer`: tabloda `state`, `lives`, `bcd` kullanıyor ama iskelette bu girişler yok.
+  `score_gfx`'i `score` mu üretecek, yoksa `sprite_rom` + `renderer` mı?

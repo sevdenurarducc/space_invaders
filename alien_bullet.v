@@ -12,6 +12,7 @@ module alien_bullet(
   input  clk,
   input  reset,
   input  tick,
+  input  playing,         // game_fsm: PLAY durumunda 1, değilse hareket durur
   input  [7:0] rnd,       // lfsr çıkışı
   input  hit,             // collision: player_hit
   input  [8:0] hpos,

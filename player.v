@@ -12,6 +12,7 @@ module player(
   input  clk,
   input  reset,
   input  tick,
+  input  playing,         // game_fsm: PLAY durumunda 1, değilse hareket durur
   input  left,
   input  right,
   input  [8:0] hpos,

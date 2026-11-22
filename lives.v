@@ -11,6 +11,7 @@
 module lives(
   input  clk,
   input  reset,
+  input  new_game,        // game_fsm: yeni oyun başlarken 1 çevrim 1
   input  player_hit,
   output [1:0] lives,
   output lives_zero

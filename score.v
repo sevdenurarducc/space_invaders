@@ -11,6 +11,7 @@
 module score(
   input  clk,
   input  reset,
+  input  new_game,        // game_fsm: yeni oyun başlarken 1 çevrim 1
   input  add,             // collision: bullet_hit_alien
   output [11:0] bcd       // 3 hane BCD
 );

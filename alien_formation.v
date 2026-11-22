@@ -12,6 +12,9 @@ module alien_formation(
   input  clk,
   input  reset,
   input  tick,
+  input  playing,         // game_fsm: PLAY durumunda 1, değilse hareket durur
+  input  new_game,        // game_fsm: yeni oyun başlarken 1 çevrim 1
+  input  next_level,      // game_fsm: yeni dalga başlarken 1 çevrim 1
   input  hit,             // collision: bullet_hit_alien
   input  [8:0] hpos,
   input  [8:0] vpos,

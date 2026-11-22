@@ -12,12 +12,13 @@ module bullet(
   input  clk,
   input  reset,
   input  tick,
+  input  playing,         // game_fsm: PLAY durumunda 1, değilse hareket durur
   input  fire,            // edge_detect çıkışı
   input  hit,             // collision: bullet_hit_alien
   input  [7:0] player_x,
   input  [8:0] hpos,
   input  [8:0] vpos,
-  output active,
+  output active,          // mermi ekranda iken 1
   output bullet_gfx
 );
 
