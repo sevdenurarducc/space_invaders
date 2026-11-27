@@ -212,3 +212,14 @@ Durum kodları `game_fsm.v` içinde `` `GS_TITLE `` 0, `` `GS_PLAY `` 1, `` `GS_
 | 9 | Canlar bitince GAME OVER; son skor görünüyor; ateş tuşu yeni oyun başlatıyor | ☐ |
 | 10 | Yeni oyunda skor, can ve formasyon sıfırlanıyor | ☐ |
 | 11 | 5 dakika kesintisiz oynanınca görsel bozulma veya donma yok | ☐ |
+
+## Controls
+
+| Bit | Key | Signal Name |
+|---|---|---|
+| switches_p1[0] | Left Arrow | btn_left |
+| switches_p1[1] | Right Arrow | btn_right |
+| switches_p1[2] | Up Arrow | Not used |
+| switches_p1[3] | Down Arrow | Not used |
+| switches_p1[4] | Space | btn_fire |
+| switches_p1[5] | Shift | Not used |
